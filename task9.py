@@ -21,8 +21,8 @@ the calculations of powers and involving brackets (probably by recursion, for th
 
 def addition(number1, number2):
     '''this and the next three functions are helpers for the find and replace function, below'''
-    sum = number1 + number2
-    return sum
+    sum_add = number1 + number2
+    return sum_add
 
 def subtraction(number1, number2):
     difference = number1 - number2
@@ -41,12 +41,12 @@ def list_to_number(array_to_change):
     '''function takes the comma-separated digits of a listed number and combines them
     by working out the maximum power of ten from the list's length, then
     decrementing this, multiplying by the digits and summing the result'''
-    sum = 0
+    sum_list = 0
     power = len(array_to_change) - 1
     for place_value_column in array_to_change:
-        sum = sum + place_value_column * 10 ** power
+        sum_list = sum_list + place_value_column * 10 ** power
         power = power - 1
-    return sum
+    return sum_list
 
 def find_next_num_func(next_num_for_loop_counter, find_next_num, array, int2_catcher, for_loop_counter):
     '''finds the right hand operand of the operators found in the calculation function'''
@@ -74,7 +74,7 @@ def find_next_num_func(next_num_for_loop_counter, find_next_num, array, int2_cat
 
 def find_last_num_func(last_num_counter, find_last_num, array, int1_catcher):
     '''finds the left hand operand of the operators found in the calculation function'''
-    while find_last_num == True:
+    while find_last_num is True:
         if last_num_counter < 0:
             find_last_num = False
             break
@@ -115,10 +115,9 @@ def sum_and_replace_func(operator, next_num_for_loop_counter,\
     int2_catcher.clear()
     array.insert(next_num_for_loop_counter, str(reinsert_sum))
     for_loop_counter = for_loop_counter + 1
-    for index in array:
-        del array[end_slice + 1:next_num_for_loop_counter]
-        next_num_for_loop_counter = 0
-        last_num_counter = 0
+    del array[end_slice + 1:next_num_for_loop_counter]
+    next_num_for_loop_counter = 0
+    last_num_counter = 0
     tuple_return_final = (next_num_for_loop_counter, last_num_counter,\
        int1_catcher, int2_catcher, for_loop_counter, array)
     return tuple_return_final
@@ -132,7 +131,7 @@ def calc(array):
     calculate the result before returning the resulting list'''
     loop = True
 
-    while loop == True:
+    while loop is True:
         precedence_for_loop_counter = 0
         #two empty lists for operand capture
         int1_catcher = []
@@ -203,8 +202,7 @@ def calc(array):
                     precedence_for_loop_counter = precedence_for_loop_counter - 1
                     if precedence_for_loop_counter == 0:
                         break
-                        continue
-
+              
 
                 else:
                     for_loop_counter = for_loop_counter + 1
@@ -233,7 +231,7 @@ def calc(array):
                     next_num_for_loop_counter, last_num_counter, int1_catcher, int2_catcher, for_loop_counter,\
                        array = tuple_returned_final
                     break
-                    continue
+                  
 
                 elif numeric == "-":
                     operator = "-"
@@ -254,7 +252,7 @@ def calc(array):
                     next_num_for_loop_counter, last_num_counter, int1_catcher, int2_catcher,\
                        for_loop_counter, array = tuple_returned_final
                     break
-                    continue
+              
 
                 else:
                     for_loop_counter = for_loop_counter + 1
@@ -277,18 +275,18 @@ def writeToFile():
     with open("CalculationFile.txt", "a") as myFile:
         loop = True
         while loop is not False:
-            sum = input("""Please input a sum of as many whole numbers you'd like.\n
+            sum_input = input("""Please input a sum of as many whole numbers you'd like.\n
            You may include '+', '-', '*', and '/': """)
            #list method to stop floats setting off the non-numeric errors
-            split_sum = list(sum.replace(" ", "").replace("\n",""))
+            split_sum = list(sum_input.replace(" ", "").replace("\n",""))
             for i  in split_sum:
-                if i.isdigit() == False:
+                if i.isdigit() is False:
                     print("These inputs are not all numerical, please try again")
                     continue
                 else:
                     sum_answered = calc(split_sum)
-                    answer_print = print(f"This is the answer to your math's question: {sum_answered[0]}")
-                    myFile.write(str(sum))
+                    print(f"This is the answer to your math's question: {sum_answered[0]}")
+                    myFile.write(str(sum_input))
                     myFile.write(" = ")
                     myFile.write(str(sum_answered[0]))
                     myFile.write("\n")
@@ -312,17 +310,17 @@ def readFromFile(file_chosen):
             print("File opening...\n\nReading first line...\n\n")
             loop = True
             while loop is not False:
-                sum = myFile.readline()
-                if not sum:
+                sum_read = myFile.readline()
+                if not sum_read:
                     print("There's nothing in this line.")
-                split_sum = list(sum.replace(" ", "").replace("\n",""))
+                split_sum = list(sum_read.replace(" ", "").replace("\n",""))
                 for i in split_sum:
-                    if i.isdigit() == False:
+                    if i.isdigit() is False:
                         print("These inputs are not all numerical, please try to read the next line")
                         continue
                     else:
                         sum_answered = calc(split_sum)
-                        print(f"""Printed below is the file's calculation along with it's answer:\n{sum} = {sum_answered[0]}""")
+                        print(f"""Printed below is the file's calculation along with it's answer:\n{sum_read} = {sum_answered[0]}""")
                         break
                 loop = input("""Please input \'False\' if you want to stop reading lines from the opened file...: """)
                 if loop.upper() == "FALSE":
@@ -348,7 +346,7 @@ def stream_choice():
     result or writing input expressions to a file, along with their result'''
     looper = True
 
-    while looper == True:
+    while looper is True:
 
         choice = input("""Welcome to the calculator.\n 
         You can either choose to input an expression for calculation,\n
@@ -359,9 +357,9 @@ def stream_choice():
             looper = False
             writeToFile()
         elif choice.upper() == 'IMPORT':
-            fileChoice = input("""Please input the file you want to open.\n
+            file_choice = input("""Please input the file you want to open.\n
            The following file: 'calculations.txt' is available: """)
-            if fileChoice == 'calculations.txt':
+            if file_choice == 'calculations.txt':
                 file_chosen = 'calculations.txt'
                 looper = False
                 readFromFile(file_chosen)
@@ -373,5 +371,3 @@ def stream_choice():
 
         
 stream_choice()
-           
-
